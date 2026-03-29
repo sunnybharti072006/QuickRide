@@ -1,158 +1,87 @@
-# 🚖 QuickRide – Scalable Ride Booking Backend
+# QuickRide
 
-## 📌 Project Overview
 
-**QuickRide** is a scalable ride-booking backend system built using **Spring Boot Microservices Architecture**.
-The system simulates real-world ride-hailing platforms like Uber/Ola and includes user management, driver management, ride booking, live location tracking, payments, and notifications.
 
-This project is designed to demonstrate **backend engineering, system design, and scalable architecture** for software engineering job roles.
+## 📝 Description
 
----
+QuickRide is a robust and efficient ride-booking management system developed using Java and the Maven build tool. Engineered with a strong emphasis on reliability and code quality, the project features a comprehensive testing framework to ensure seamless performance and stability in high-demand environments. QuickRide provides a scalable backend solution for managing transportation logistics, ride scheduling, and real-time updates, making it a dependable foundation for modern transit applications.
+
+## ✨ Features
+
+- 🧪 Testing
+
 
 ## 🛠️ Tech Stack
 
-🟡 **Currently in Development**
-✅ User Register API Completed
-✅ User Login API Completed
+- ☕ Java (Maven)
 
-**Technologies Used:**
 
-* Java 21+
-* Spring Boot
-* Spring Data JPA
-* Spring Security + JWT
-* PostgreSQL / MySQL
-* Redis (Caching & Nearby Drivers)
-* Apache Kafka (Event Streaming & Notifications)
-* WebSocket (Live Driver Location)
-* Docker
-* Spring Cloud Gateway (API Gateway)
-* GraphQL
-* Swagger / OpenAPI
-* JUnit & Testcontainers
-
----
-
-## 🏗️ System Architecture
+## 📦 Key Dependencies
 
 ```
-Client (Mobile/Web)
-        |
-        v
-API Gateway (Spring Cloud Gateway)
-        |
-------------------------------------------------
-|        |        |        |        |           |
-User   Driver    Ride   Payment  Location  Notification
-Service Service Service Service Service     Service
-        |
-     Database (PostgreSQL)
-        |
-      Redis (Cache)
-        |
-      Kafka (Event Streaming)
+spring-boot-starter-cache: 0.11.5
+jjwt-impl: 0.11.5
+postgresql: 0.11.5
+spring-boot-starter-data-jpa: 2.8.16
+spring-cloud-starter-gateway-server-webmvc: ${spring-cloud.version}
+graphql-dgs-platform-dependencies: ${netflix-dgs.version}
 ```
 
----
+## 📁 Project Structure
 
-## 📂 Project Modules
-
-| Service              | Description                        |
-| -------------------- | ---------------------------------- |
-| User Service         | User registration & authentication |
-| Driver Service       | Driver profile & availability      |
-| Ride Service         | Ride booking & ride lifecycle      |
-| Location Service     | Live driver location tracking      |
-| Payment Service      | Ride payment processing            |
-| Notification Service | Email/SMS/Push notifications       |
-
----
-
-## 🗄️ Database Schema
-
-**Main Tables:**
-
-* users
-* drivers
-* ride_requests
-* rides
-* payments
-* locations
-
----
-
-## 🔑 Features
-
-* User Registration & Login (JWT Authentication)
-* Driver Availability Toggle
-* Ride Request System
-* Driver Matching Algorithm (Nearest Driver)
-* Ride Lifecycle:
-
-  * REQUESTED
-  * ACCEPTED
-  * STARTED
-  * COMPLETED
-  * CANCELLED
-* Live Driver Location Tracking (WebSocket)
-* Payment Integration
-* Kafka Event-based Notifications
-* Redis Cache for Nearby Drivers
-* API Gateway Routing
-* Dockerized Deployment
-
----
-
-## 🚀 API Endpoints (Sample)
-
-### User APIs
-
-| Method | Endpoint            | Description   |
-| ------ | ------------------- | ------------- |
-| POST   | /api/users/register | Register user |
-| GET    | /api/users/login    | Login user    |
-
-### Ride APIs
-
-| Method | Endpoint            | Description         |
-| ------ | ------------------- | ------------------- |
-| POST   | /api/rides/request  | Request ride        |
-| POST   | /api/rides/accept   | Driver accepts ride |
-| POST   | /api/rides/start    | Start ride          |
-| POST   | /api/rides/complete | Complete ride       |
-
----
-
-## 🐳 Docker Run
-
-```bash
-docker-compose up --build
+```
+.
+├── .mvn
+│   └── wrapper
+│       └── maven-wrapper.properties
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── QuickRide
+    │   │           ├── QuickRideApplication.java
+    │   │           ├── config
+    │   │           │   └── SecurityConfig.java
+    │   │           ├── controller
+    │   │           │   └── UserController.java
+    │   │           ├── entity
+    │   │           │   ├── Driver.java
+    │   │           │   ├── Ride.java
+    │   │           │   └── User.java
+    │   │           ├── repository
+    │   │           │   └── UserRepository.java
+    │   │           └── service
+    │   │               └── UserService.java
+    │   └── resources
+    │       └── application.properties
+    └── test
+        └── java
+            └── com
+                └── QuickRide
+                    └── QuickRideApplicationTests.java
 ```
 
----
+## 🛠️ Development Setup
 
-## 📊 Future Improvements
+### Java (Maven) Setup
+1. Install Java (JDK 26 recommended)
+2. Install Maven
+3. Install dependencies: `mvn install`
+4. Run the project: `mvn exec:java` or check `pom.xml` for specific run commands
 
-* Surge Pricing Algorithm
-* ETA Calculation
-* Google Maps Integration
-* Online Payments (Stripe/Razorpay)
-* Kubernetes Deployment
-* CI/CD Pipeline (GitHub Actions)
-* Rate Limiting
-* Distributed Logging (ELK Stack)
 
----
+## 👥 Contributing
 
-## 👨‍💻 Author
+Contributions are welcome! Here's how you can help:
 
-**Sunny Bharti**
+1. **Fork** the repository
+2. **Clone** your fork: `git clone https://github.com/sunnybharti072006/QuickRide.git`
+3. **Create** a new branch: `git checkout -b feature/your-feature`
+4. **Commit** your changes: `git commit -am 'Add some feature'`
+5. **Push** to your branch: `git push origin feature/your-feature`
+6. **Open** a pull request
 
----
-
-## ⭐ Resume Project Description
-
-**QuickRide – Scalable Ride Booking System**
-Developing a scalable ride booking backend using Spring Boot microservices architecture with Kafka, Redis, WebSocket, and Docker. Implemented user registration and login and currently building driver, ride, and payment modules with planned JWT authentication and event-driven architecture.
-
----
+Please ensure your code follows the project's style guidelines and includes tests where applicable.
