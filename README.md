@@ -17,8 +17,8 @@ This project is designed to demonstrate **backend engineering, system design, an
 
 **Technologies Used:**
 
-* Java 21+
-* Spring Boot
+* Java 26
+* Spring Boot 3.5x
 * Spring Data JPA
 * Spring Security + JWT
 * PostgreSQL / MySQL
