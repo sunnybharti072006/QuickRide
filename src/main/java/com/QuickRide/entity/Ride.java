@@ -22,7 +22,9 @@ public class Ride {
     private Double dropLng;
 
     private Double fare;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private RideStatus status;
 
     private LocalDateTime acceptedAt;
     private LocalDateTime startedAt;
