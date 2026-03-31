@@ -1,6 +1,8 @@
 package com.QuickRide.controller;
 
+import com.QuickRide.dto.AcceptRideDTO;
 import com.QuickRide.dto.RideRequestDTO;
+import com.QuickRide.entity.Ride;
 import com.QuickRide.entity.RideRequest;
 import com.QuickRide.service.RideService;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,10 @@ public class RideController {
     @PostMapping("/request")
     public RideRequest requestRide(@RequestBody RideRequestDTO dto) {
         return rideService.requestRide(dto);
+    }
+    @PostMapping("/accept")
+    public Ride acceptRide(@RequestBody AcceptRideDTO dto) {
+        return rideService.acceptRide(dto);
     }
 
 }

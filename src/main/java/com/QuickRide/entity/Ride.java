@@ -12,6 +12,7 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long requestId;
     private Long userId;
     private Long driverId;
 

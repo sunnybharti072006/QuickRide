@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.QuickRide.dto.AcceptRideDTO;
+import com.QuickRide.entity.Ride;
+import com.QuickRide.repository.RideRepository;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class RideService {
 
+    private final RideRepository rideRepository;
     private final RideRequestRepository rideRequestRepository;
     private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
 
@@ -40,5 +44,32 @@ public class RideService {
         });
 
         return savedRequest;
+    }
+
+    public Ride acceptRide(AcceptRideDTO dto) {
+        RideRequest request = rideRequestRepository.findById(dto.getRequestId())
+                .orElseThrow(() -> new RuntimeException("Ride request not found"));
+
+        if (!"REQUESTED".equals(request.getStatus())) {
+            throw new RuntimeException("Ride already accepted or invalid state");
+        }
+
+        request.setStatus("DRIVER_ASSIGNED");
+        rideRequestRepository.save(request);
+
+        Ride ride = new Ride();
+        ride.setRequestId(request.getId());
+        ride.setUserId(request.getUserId());
+        ride.setDriverId(dto.getDriverId());
+        ride.setStatus("ACCEPTED");
+        ride.setAcceptedAt(LocalDateTime.now());
+
+        Ride savedRide = rideRepository.save(ride);
+
+        executor.submit(() -> {
+            log.info("Driver {} accepted ride {}", dto.getDriverId(), request.getId());
+        });
+
+        return savedRide;
     }
 }
