@@ -54,7 +54,6 @@ public class RideService {
         RideRequest request = rideRequestRepository.findById(dto.getRequestId())
                 .orElseThrow(() -> new RuntimeException("Ride request not found"));
 
-        // FIX: Compare Enum with Enum, not String
         if (request.getStatus() != RideStatus.REQUESTED) {
             throw new RuntimeException("Ride already accepted or invalid state");
         }
@@ -67,7 +66,6 @@ public class RideService {
         ride.setUserId(request.getUserId());
         ride.setDriverId(dto.getDriverId());
 
-        // FIX: Set Enum, not String "ACCEPTED"
         ride.setStatus(RideStatus.DRIVER_ASSIGNED);
         ride.setAcceptedAt(LocalDateTime.now());
 
@@ -83,7 +81,6 @@ public class RideService {
         Ride ride = rideRepository.findById(rideId)
                 .orElseThrow(() -> new RuntimeException("Ride not found"));
 
-        // FIX: logic check based on DRIVER_ASSIGNED
         if (ride.getStatus() != RideStatus.DRIVER_ASSIGNED) {
             throw new RuntimeException("Ride cannot be started from current state: " + ride.getStatus());
         }
@@ -91,7 +88,6 @@ public class RideService {
         ride.setStatus(RideStatus.STARTED);
         ride.setStartedAt(LocalDateTime.now());
 
-        // Update the original request too
         rideRequestRepository.findById(ride.getRequestId()).ifPresent(req -> {
             req.setStatus(RideStatus.STARTED);
             rideRequestRepository.save(req);
@@ -112,7 +108,6 @@ public class RideService {
         ride.setStatus(RideStatus.COMPLETED);
         ride.setCompletedAt(LocalDateTime.now());
 
-        // Update the original request status to COMPLETED
         rideRequestRepository.findById(ride.getRequestId()).ifPresent(req -> {
             req.setStatus(RideStatus.COMPLETED);
             rideRequestRepository.save(req);
