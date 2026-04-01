@@ -19,13 +19,18 @@ public class TrackingController {
 
     @MessageMapping("/driver-location")
     public void processLocation(@Payload LocationUpdateDTO data) {
-        trackingService.updateDriverInRedis(data.getDriverId(), data.getLat(), data.getLng());
+        trackingService.updateDriverLocation(data.getDriverId(), data.getLat(), data.getLng());
 
-        double distance = trackingService.getLiveDistance(data.getDriverId(), data.getUserId());
+        double distance = trackingService.getLiveDistance(
+                data.getUserId(),    // 1st: String userId
+                data.getLat(),       // 2nd: double dLat
+                data.getLng()        // 3rd: double dLng
+        );
 
-        String destination = "/topic/distance/" + data.getUserId();
-        String message = String.format("%.2f KM away", distance);
-
-        messagingTemplate.convertAndSend(destination, message);
+        if (distance != -1) {
+            String topic = "/topic/distance/" + data.getUserId();
+            String message = String.format("%.2f KM", distance);
+            messagingTemplate.convertAndSend(topic, message);
+        }
     }
 }
